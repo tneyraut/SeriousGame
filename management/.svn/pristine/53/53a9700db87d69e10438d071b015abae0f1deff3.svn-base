@@ -1,0 +1,111 @@
+package managementdeshommes;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import org.w3c.dom.Element;
+
+public abstract class View extends JPanel
+{
+    protected String id;
+    protected JPanel centerPanel;
+    protected JLabel textLabel;
+    protected JPanel choicePanel;
+    protected ArrayList<JButton> boutons;
+    
+    public View(String id)
+    {
+        super();
+        this.id = id;
+        
+        centerPanel = new JPanel();
+        
+        textLabel = new JLabel();
+        textLabel.setFont(new Font("Serif", Font.PLAIN, 16));
+        textLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        
+        choicePanel = new JPanel();
+        choicePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        boutons = new ArrayList<>();
+        
+        this.createStructure();
+    }
+    
+    public void createStructure()
+    {   
+        this.setLayout(new BorderLayout());
+        
+        centerPanel.setLayout(new BorderLayout());
+        this.add(centerPanel, BorderLayout.CENTER);
+        
+        JPanel southPanel = new JPanel();
+        southPanel.setLayout(new BorderLayout());
+            
+            southPanel.add(textLabel, BorderLayout.NORTH);
+            
+            southPanel.add(choicePanel, BorderLayout.CENTER);
+            
+        this.add(southPanel, BorderLayout.SOUTH);
+    }
+    
+    public abstract String getValue();
+    public abstract void fill(Element viewXML);
+
+    public void setText(String text)
+    {
+        String html = "<html>"+text+"</html>";
+        html = html.replace("*username*", Joueur.getInstance().getUsername());
+        textLabel.setText(html);
+    }
+    
+    public String getId()
+    {
+        return id;
+    }
+    
+    public void setNumberOfButtons(int nb)
+    {
+        GridLayout grid;
+        
+        switch(nb)
+        {
+            case 1:
+                grid = new GridLayout(1,1);
+                break;
+            case 2:
+                grid = new GridLayout(1,2);
+                break;
+            case 3:
+                grid = new GridLayout(1,3);
+                break;
+            case 4:
+                grid = new GridLayout(2,2);
+                break;
+            case 5:
+                grid = new GridLayout(2,3);
+                break;
+            case 6:
+                grid = new GridLayout(2,3);
+                break;
+            default:
+                grid = new GridLayout(2,3);
+                break;
+        }
+        
+        grid.setHgap(20);
+        grid.setVgap(20);
+        
+        choicePanel.setLayout(grid);
+    }
+    
+    public void addButton(JButton button)
+    {
+        choicePanel.add(button);
+        boutons.add(button);
+    }
+}

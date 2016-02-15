@@ -1,0 +1,74 @@
+package managementdeshommes;
+
+public class Action
+{
+    private String type;
+    private String label;
+    private String effect;
+    private String condition;
+    
+    private Wizard wizard;
+    
+    public Action(String type)
+    {
+        this.type = type;
+    }
+
+    public Action(String type, String label, String effect)
+    {
+        this.type = type;
+        this.label = label;
+        this.effect = effect;
+        this.condition = null;
+    }
+    
+    public Action(String type, String label, String effect, String condition)
+    {
+        this.type = type;
+        this.label = label;
+        this.effect = effect;
+        this.condition = condition;
+    }
+    
+    public void setCondition(String condition)
+    {
+        this.condition = condition;
+    }
+    
+    public boolean run()
+    {
+        boolean changeView = true;
+        if(condition == null || condition.equals(wizard.getCurrentValue()))
+        {
+            switch(type)
+            {
+                case "stat":
+                    Joueur.getInstance().add(label, Integer.parseInt(effect));
+                break;
+                case "notification":
+                    wizard.showNotification(label, effect, false);
+                break;
+                case "modal":
+                    wizard.showNotification(label, effect, true);
+                break;
+                case "changeView":
+                    wizard.showNotification("Evenement", label, false);
+                    wizard.show(effect);
+                    changeView = false;
+                break;
+            }
+        }
+        
+        return changeView;
+    }
+
+    void setWizard(Wizard window)
+    {
+        this.wizard = window;
+    }
+
+    public String getType()
+    {
+        return this.type;
+    }
+}

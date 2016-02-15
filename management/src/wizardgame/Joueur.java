@@ -1,0 +1,61 @@
+package wizardgame;
+
+import java.util.HashMap;
+
+public class Joueur
+{
+    private static Joueur instance = null;
+    
+    private HashMap<String, Integer> stats;
+    private String username;
+
+
+    private Joueur()
+    {
+        stats = new HashMap<>();
+        username = "Dupont";
+    }
+    
+    public static Joueur getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new Joueur();
+        }
+        
+        return instance;
+    }
+   
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+    
+    public void add(String stat, int value)
+    {
+        if(stats.get(stat) == null)
+            stats.put(stat,  value);
+        else
+            stats.put(stat, stats.get(stat) + value);
+    }
+    
+    public void setStat(String stat, int value)
+    {
+        stats.put(stat,  value);
+    }
+    
+    public int get(String stat)
+    {
+        return stats.get(stat);
+    }
+    
+    public HashMap getStats()
+    {
+        return this.stats;
+    }
+}

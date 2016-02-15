@@ -1,0 +1,75 @@
+package managementdeshommes;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import org.w3c.dom.Element;
+
+public class TextView extends View
+{
+    public TextView(String id)
+    {
+        super(id);
+    }
+    
+    @Override
+    public void fill(Element viewXML)
+    { 
+    }
+    
+    @Override
+    public void createStructure()
+    {   
+        this.setLayout(new BorderLayout());
+        
+        centerPanel.setLayout(new FlowLayout());
+            
+            centerPanel.add(textLabel);
+            centerPanel.add(choicePanel);
+        
+        this.add(centerPanel, BorderLayout.CENTER);
+        
+        
+    }
+    
+    @Override
+    public void setNumberOfButtons(int nb)
+    {
+        GridLayout grid;
+        
+        switch(nb)
+        {
+            case 1:
+                grid = new GridLayout(1,1);
+                break;
+            case 2:
+                grid = new GridLayout(1,2);
+                break;
+            case 3:
+                grid = new GridLayout(2,2);
+                break;
+            case 4:
+                grid = new GridLayout(2,2);
+                break;
+            case 5:
+                grid = new GridLayout(3,2);
+                break;
+            case 6:
+                grid = new GridLayout(3,2);
+                break;
+            default:
+                grid = new GridLayout(3,3);
+                break;
+        }
+        
+        grid.setHgap(20);
+        grid.setVgap(20);
+        
+        choicePanel.setLayout(grid);
+    }
+    @Override
+    public String getValue()
+    {
+        return "";
+    }
+}

@@ -1,0 +1,6 @@
+package managementdeshommes;
+
+public interface XMLModel
+{
+    public void fill(Wizard wizard);
+}

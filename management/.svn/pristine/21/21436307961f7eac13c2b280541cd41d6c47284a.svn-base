@@ -1,0 +1,70 @@
+package managementdeshommes;
+
+import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+public class IntroWindow extends JFrame implements ActionListener
+{
+    private final JButton boutonJouer;
+    private final JButton boutonAbout;
+    
+    public IntroWindow()
+    {
+        super("Management des Hommes");
+        this.setSize(300, 300);
+        this.setLocationRelativeTo(null); 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        BoxLayout layout = new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS);
+
+        
+        this.getContentPane().setLayout(layout);
+        
+            boutonJouer = new JButton("Jouer");
+            boutonJouer.setAlignmentX(Component.CENTER_ALIGNMENT);
+            boutonJouer.addActionListener(this);
+            this.getContentPane().add(boutonJouer);
+            
+            boutonAbout = new JButton("About");
+            boutonAbout.setAlignmentX(Component.CENTER_ALIGNMENT);
+            boutonAbout.addActionListener(this);
+            this.getContentPane().add(boutonAbout);
+            
+        this.setIconImage(getToolkit().getImage(getClass().getResource("/icones/icone.png")));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event)
+    {
+        if(event.getSource() == boutonJouer)
+        {
+            String s = (String)JOptionPane.showInputDialog(this, "Veuillez entrer votre nom", "Nouvelle partie", JOptionPane.PLAIN_MESSAGE, null, null, "Dupont");
+
+            //If a string was returned, say so.
+            if ((s != null) && (s.length() > 0)) {
+                Joueur.getInstance().setUsername(s);
+            }
+            else
+                return;
+            
+            MainWindow w = new MainWindow();
+            this.setVisible(false);
+            w.setVisible(true);
+        }
+        else if(event.getSource() == boutonAbout)
+        {
+            
+        }
+    }
+}

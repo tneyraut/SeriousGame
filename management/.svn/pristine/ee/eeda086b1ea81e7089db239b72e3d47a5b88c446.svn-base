@@ -1,0 +1,57 @@
+package managementdeshommes;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+
+public class ChoiceButton extends JButton implements ActionListener
+{
+    private String target;
+    private Wizard wizard;
+    private ArrayList<Action> actions;
+    
+    public ChoiceButton(String text, String target, Wizard wizard)
+    {
+        super(text);
+        
+        this.target = target;
+        this.wizard = wizard;
+        this.actions = new ArrayList<>();
+    }
+    
+    public ChoiceButton(ImageIcon image, String value, String target, Wizard wizard)
+    {
+        super(image);
+        
+        this.setText(value);
+        this.setVerticalTextPosition(SwingConstants.TOP);
+        this.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        this.target = target;
+        this.wizard = wizard;
+        this.actions = new ArrayList<>();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event)
+    {
+        boolean changeView = true;
+        for(Action action : actions)
+        {
+            changeView &= action.run();
+        }
+        
+        if(changeView)
+            wizard.show(target);
+    }
+    
+    public void addAction(Action action)
+    {
+        this.actions.add(action);
+        action.setWizard(wizard);
+    }
+}

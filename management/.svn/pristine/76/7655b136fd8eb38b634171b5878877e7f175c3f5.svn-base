@@ -1,0 +1,36 @@
+package managementdeshommes;
+
+import java.awt.BorderLayout;
+import org.w3c.dom.Element;
+
+public class TextView extends View
+{
+    public TextView(String id)
+    {
+        super(id);
+    }
+    
+    @Override
+    public void fill(Element viewXML)
+    { 
+    }
+    
+    @Override
+    public void createStructure()
+    {   
+        this.setLayout(new BorderLayout());
+        
+        centerPanel.setLayout(new BorderLayout());
+            
+            centerPanel.add(textLabel, BorderLayout.NORTH);
+            centerPanel.add(choicePanel, BorderLayout.CENTER);
+        
+        this.add(centerPanel, BorderLayout.CENTER);
+    }
+    
+    @Override
+    public String getValue()
+    {
+        return "";
+    }
+}

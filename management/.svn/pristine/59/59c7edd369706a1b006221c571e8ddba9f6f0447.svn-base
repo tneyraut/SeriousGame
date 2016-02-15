@@ -1,0 +1,144 @@
+package managementdeshommes;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+
+public class StoryModel implements XMLModel
+{
+    private Document document;
+    private Element racine;
+    private ViewFactory viewFactory;
+    
+    public StoryModel(String path)
+    {
+        viewFactory = new ViewFactory();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try
+        {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            
+            InputStream is = getClass().getResourceAsStream(path); 
+            document = builder.parse(is);
+            racine = document.getDocumentElement();
+            
+            Element joueur = (Element) racine.getElementsByTagName("joueur").item(0);
+            this.initJoueur(joueur);
+            
+        }
+        catch(ParserConfigurationException | SAXException | IOException ex)
+        {
+            Logger.getLogger(StoryModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initJoueur(Element joueur)
+    {
+        NodeList stats = joueur.getElementsByTagName("stat");
+        for(int i=0; i<stats.getLength(); i++)
+        {
+            String label = ((Element) stats.item(i)).getAttribute("label");
+            int value = Integer.parseInt(((Element) stats.item(i)).getAttribute("value"));
+            
+            Joueur.getInstance().add(label, value);
+        }
+    }
+
+    @Override
+    public void fill(Game window)
+    {
+        NodeList views = racine.getElementsByTagName("view");
+        
+        for(int i=0; i<views.getLength(); i++)
+        {
+            Element viewXML = (Element) views.item(i);
+            this.createView(viewXML, window);
+        }
+    }
+    
+    private void createView(Element viewXML, Game window)
+    {
+        String id = viewXML.getAttribute("id");
+        String type = ((Element) viewXML.getElementsByTagName("type").item(0)).getTextContent();
+        
+        View view = viewFactory.createView(id, type);
+        view.fill(viewXML);
+        
+        String text = ((Element) viewXML.getElementsByTagName("text").item(0)).getTextContent();
+        view.setText(text);
+        
+        NodeList buttonsList = viewXML.getElementsByTagName("button");
+        view.setNumberOfButtons(buttonsList.getLength());
+        for(int i=0; i<buttonsList.getLength(); i++)
+        {
+            Element xmlButton = (Element) buttonsList.item(i);
+            view.addButton(this.createButton(xmlButton, window));
+        }
+        
+        window.addView(view);
+    }
+    
+    private ChoiceButton createButton(Element xmlButton, Game window)
+    {
+        String label = xmlButton.getAttribute("label");
+        String target = xmlButton.getAttribute("target");
+
+        ChoiceButton button;
+        if(xmlButton.hasAttribute("image"))
+        {
+            try
+            {
+                BufferedImage img = ImageIO.read(getClass().getResource(xmlButton.getAttribute("image")));
+                ImageIcon image = new ImageIcon(img.getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+
+                button = new ChoiceButton(image, label, target, window);
+            }
+            catch(IOException ex)
+            {
+                button = new ChoiceButton(label, target, window);
+                Logger.getLogger(StoryModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else
+        {
+            button = new ChoiceButton(label, target, window);
+        }
+        
+        NodeList actions = xmlButton.getElementsByTagName("action");
+        for(int i=0; i<actions.getLength(); i++)
+        {
+            Element xmlAction = (Element) actions.item(i);
+            Action action;
+            if(xmlAction.hasAttribute("label") && xmlAction.hasAttribute("effect"))
+            {
+                action = new Action(xmlAction.getAttribute("type"), xmlAction.getAttribute("label"), xmlAction.getAttribute("effect"));
+            }
+            else
+            {
+                action = new Action(xmlAction.getAttribute("type"));
+            }
+
+            if(xmlAction.hasAttribute("condition"))
+                action.setCondition(xmlAction.getAttribute("condition"));
+
+            button.addAction(action);
+        }
+        button.addActionListener(button);
+        
+        return button;
+    }
+}

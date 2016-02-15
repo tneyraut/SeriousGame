@@ -1,0 +1,692 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes" ?>
+<story>
+    <joueur>
+        <stat label="Charisme" value="0" />
+        <stat label="Bon Manager" value="0" />
+        <stat label="Assertivité" value="0" />
+        <stat label="Note" value="0" />
+    </joueur>
+    
+    <view id="choixDuBas">
+        <type>imageSelection</type>
+        <text>
+            Bonjour M. *username*,
+            vous vous trouvez dans votre chambre et après une bonne nuit de sommeil,
+            le réveil sonne, c’est l’heure d’aller travail.
+            Vous allez vous habiller mais avant toutes choses,
+            vous devez sélectionner votre tenu de travail.
+            Veuillez choisir le bas de votre tenue :
+        </text>
+        <item path="/images/image1.png" value="baggy">Un Baggy</item>
+        <item path="/images/image2.png" value="jean">Un Jean</item>
+        <item path="/images/censored.png" value="rien">Rien du tout</item>
+        <item path="/images/image3.png"  value="survet">Un survêtement</item>
+        <item path="/images/image4.png" value="costume">Un pantalon de costume</item>
+        <button target="choixDuHaut1" label="Choisir ce bas">
+            <action condition="baggy" type="stat" label="Charisme" effect="-20" />
+            
+            <!-- PROBLEME LORS DE LA COMPILATION A REPRENDRE GAME OVER A FAIRE -->
+            <action condition="rien" type="stat" label="Charisme" effect="-1000" />
+            <action condition="rien" type="modal" label="Exhibitioniste !" effect="C'est de l'exhibitionisme ! Vous allez en prison." />
+            <action condition="rien" type="changeView" label="Exhibitioniste" effect="choixDuBas" />
+            <!-- PROBLEME LORS DE LA COMPILATION A REPRENDRE GAME OVER A FAIRE -->
+            
+            <action condition="survet" type="stat" label="Charisme" effect="-40" />
+            <action condition="costume" type="stat" label="Charisme" effect="20" />
+        </button>
+    </view>
+    
+    <view id="choixDuHaut1">
+        <type>imageSelection</type>
+        <text>
+            Veuillez choisir votre le haut de votre tenue :
+        </text>
+        <item path="/images/image5.png" value="t-shirt">Un T-shirt</item>
+        <item path="/images/image6.png" value="polo">Un polo</item>
+        <item path="/images/image7.png" value="chemiseBlanche">Une chemise blanche ou bleu</item>
+        <item path="/images/image8.png" value="hawai">Une chemise hawaiienne</item>
+        <item path="/images/image9.png" value="canari">Une chemise jaune canari</item>
+        <button target="choixDuHaut2" label="Choisir ce haut">
+            <action condition="t-shirt" type="stat" label="Charisme" effect="-10" />
+            <action condition="chemiseBlanche" type="stat" label="Charisme" effect="10" />
+            <action condition="hawai" type="stat" label="Charisme" effect="-25" />
+            <action condition="canari" type="stat" label="Charisme" effect="-20" />
+        </button>
+    </view>
+    
+    <view id="choixDuHaut2">
+        <type>imageSelection</type>
+        <text>
+            Veuillez choisir votre le haut de votre tenue :
+        </text>
+        <item path="/images/image10.png" value="pull">Un pull</item>
+        <item path="/images/rien.png" value="rien">Rien</item>
+        <item path="/images/image11.png" value="polaire">Une polaire</item>
+        <item path="/images/image12.png" value="costume">Une veste de costume</item>
+        <item path="/images/image13.png" value="canari">Une veste de costume jaune canari</item>
+        <button target="choixDesChaussures" label="Choisir ce haut">
+            <action condition="polaire" type="stat" label="Charisme" effect="-10" />
+            <action condition="costume" type="stat" label="Charisme" effect="10" />
+            <action condition="canari" type="stat" label="Charisme" effect="-10" />
+        </button>
+    </view>
+    
+    <view id="choixDesChaussures">
+        <type>imageSelection</type>
+        <text>
+            Veuillez choisir vos chaussures :
+        </text>
+        <item path="/images/image14.png" label="Chaussures de costume" value="costume">Chaussures de costume</item>
+        <item path="/images/image15.png" label="Chaussures de sport" value="sport">Chaussures de sport</item>
+        <item path="/images/image16.png" label="Converses" value="converses">Converses</item>
+        <item path="/images/image17.png" label="Chaussures de costume jaune canari" value="canari">Chaussures de costume jaune canari</item>
+        <item path="/images/image18.png" label="Pieds nus" value="rien">Pieds nus</item>
+        <button target="testCaractere1" label="Choisir ces chaussures">
+            <action condition="costume" type="stat" label="Charisme" effect="10" />
+            <action condition="sport" type="stat" label="Charisme" effect="-10" />
+            <action condition="converses" type="stat" label="Charisme" effect="-5" />
+            <action condition="canari" type="stat" label="Charisme" effect="-20" />
+            <action condition="rien" type="stat" label="Charisme" effect="-30" />
+            <action type="modal" label="Vous êtes prêt !" effect="Vous voilà enfin prêt pour aller au travail, mais avant toutes choses nous allons vous faire passer un petit test de charisme." />
+        </button>
+    </view>
+    
+    <view id="testCaractere1">
+        <type>text</type>
+        <text>
+            Etes vous :
+        </text>
+        <button target="testCaractere2" label="Calme" image="/images/image19.png">
+            <action type="stat" label="Charisme" effect="+5" />
+        </button>
+        <button target="testCaractere2" label="Nerveux" image="/images/image20.png">
+            <action type="stat" label="Charisme" effect="-10" />
+        </button>
+        <button target="testCaractere2" label="Endormi"  image="/images/image21.png">
+            <action type="stat" label="Charisme" effect="-5" />
+        </button>
+    </view>
+    
+    <view id="testCaractere2">
+        <type>text</type>
+        <text>Etes vous :</text>
+        <button target="testCaractere3" label="Anxieux" image="/images/image22.png">
+            <action type="stat" label="Charisme" effect="-10" />
+        </button>
+        <button target="testCaractere3" label="Stressé" image="/images/image23.png">
+            <action type="stat" label="Charisme" effect="-15" />
+        </button>
+        <button target="testCaractere3" label="Détendu" image="/images/image24.png">
+            <action type="stat" label="Charisme" effect="5" />
+        </button>
+    </view>
+    
+    <view id="testCaractere3">
+        <type>image</type>
+        <background>/images/image25.png</background>
+        <text>Savez-vous gérer vos émotions ?</text>
+        <button target="testCaractere4" label="Oui">
+            <action type="stat" label="Charisme" effect="5" />
+        </button>
+        <button target="testCaractere4" label="Non">
+            <action type="stat" label="Charisme" effect="-5" />
+        </button>
+    </view>
+    
+    <view id="testCaractere4">
+        <type>text</type>
+        <text>Vous avez un débit de paroles :</text>
+        <button target="testCaractere5" label="Elevé">
+            <action type="stat" label="Charisme" effect="-10" />
+        </button>
+        <button target="testCaractere5" label="Moyen">
+            <action type="stat" label="Charisme" effect="5" />
+        </button>
+        <button target="testCaractere5" label="Faible">
+            <action type="stat" label="Charisme" effect="-5" />
+        </button>
+    </view>
+    
+    <view id="testCaractere5">
+        <type>text</type>
+        <text>Votre voix est :</text>
+        <button target="testCaractere6" label="Grave" image="/images/image35.png">
+            <action type="stat" label="Charisme" effect="5"/>
+        </button>
+        <button target="testCaractere6" label="Aigue" image="/images/image36.png">
+            <action type="stat" label="Charisme" effect="-10"/>
+        </button>
+        <button target="testCaractere6" label="Ni l'un ni l'autre">
+            <action type="stat" label="Charisme" effect="0" />
+        </button>
+    </view>
+    
+    <view id="testCaractere6">
+        <type>image</type>
+        <background>/images/image26.png</background>
+        <text>Lors d’un entretien, d’une réunion, ou d’une présentation avez vous une gestuelle :</text>
+        <button target="testCaractere7" label="Oui">
+            <action type="stat" label="Charisme" effect="5" />
+        </button>
+        <button target="testCaractere7" label="Non">
+            <action type="stat" label="Charisme" effect="-5" />
+        </button>
+    </view>
+    
+    <view id="testCaractere7">
+        <type>image</type>
+        <background>/images/image27.png</background>
+        <text>Vous vous tenez habituellement :</text>
+        <button target="testCaractere8" label="Droit">
+            <action type="stat" label="Charisme" effect="5" />
+        </button>
+        <button target="testCaractere8" label="Un peu courbé">
+            <action type="stat" label="Charisme" effect="-5" />
+        </button>
+        <button target="testCaractere8" label="Courbé">
+            <action type="stat" label="Charisme" effect="-10" />
+        </button>
+    </view>
+    
+    <view id="testCaractere8">
+        <type>imageSelection</type>
+        <text>De manière générale etes-vous :</text>
+        <item path="/images/image28.png" value="triste">Triste</item>
+        <item path="/images/image29.png" value="joyeux">Joyeux</item>
+        <item path="/images/image22.png" value="anxieux">Anxieux</item>
+        <item path="/images/rien.png" value="soucieux">Soucieux</item>
+        <item path="/images/rien.png" value="neutre">Neutre</item>
+        <button target="deuxiemeTest" label="Suivant">
+            <action condition="triste" type="stat" label="Charisme" effect="-15" />
+            <action condition="joyeux" type="stat" label="Charisme" effect="5" />
+            <action condition="anxieux" type="stat" label="Charisme" effect="-15" />
+            <action condition="soucieux" type="stat" label="Charisme" effect="-10" />
+            <action condition="neutre" type="stat" label="Charisme" effect="-5" />
+            <action type="modal" label="Test terminé !" effect="Bon courage pour cette longue journée de travail qui risque forte d'être chargée en péripécies" />
+        </button>
+    </view>
+
+    <view id="deuxiemeTest">
+        <type>textSelection</type>
+        <text>
+            Vous venez d’arriver sur votre lieu de travail.
+            Vous entrez dans les locaux de l’entreprise et Madame Tourpoin, la déléguée du personnel,
+            vous attendait afin de se plaindre des problèmes du personnel.
+            Sa voix cassée, aigue et forte vous assène les tympans dès 8h du matin.
+        </text>
+        <item value="0">
+            Vous lui répliquez d’un ton énergique :
+            «Ecoutez, cela ne vous dérange pas de parler de cela plus tard,
+            prenez rendez-vous avec ma secrétaire.»
+        </item>
+        <item value="1">
+            Vous lui répliquez d’un ton sec et assuré : 
+            «Ecoutez bien, j’ai autre chose à faire pour le moment, 
+            vous devriez pas être déjà à votre poste à cette heure-ci.»
+        </item>
+        <item value="2">
+            Vous lui répliquez d’un ton amical, posé, calme, détendu :
+            «Malheureusement je n’ai pas le temps de suite pour discuter de ce sujet avec vous, 
+            mais je vous propose que l’on se voit ce midi et que l’on en discute afin de trouver des solutions ensemble le plus vite possible. 
+            Qu’est ce qui vous arrangerai ? 12h ? 12h30 ? »
+        </item>
+        <item value="3">
+            Vous lui répliquez calmement :
+            « Bonjour. Je vous propose de de venir me voir dans mon bureau dans 10min pour qu’on puisse en discuter. »
+        </item>
+        <item value="4">
+            Vous lui répliquez calmement : «Je vous propose de discuter de cela de suite mais plus
+            confortablement dans la salle de réunion, j’aimerai bien que vous me donniez l’ensemble
+            des problèmes que vous avez pu relevé ainsi que les solutions que vous pensez qu’il 
+            faudrait envisager. On va essayez ce matin de résoudre le plus de problème possible
+            et d’organiser une réunion afin de présenter les solutions que l’on aimerait apporter 
+            et surtout afin de vérifier l’adhésion du personnel».
+        </item>
+    
+        <button target="troisiemeTest" label="Suivant">
+            <action condition="0" type="stat" label="Assertivité" effect="-10" />
+            <action condition="0" type="stat" label="Bon Manager" effect="-10" />
+            <action condition="0" type="modal" label="Réaction" effect="Vous décidez de prendre la fuite de manière assez agressive. GREVE GENERALE DEMAIN !" />
+            
+            <action condition="1" type="stat" label="Assertivité" effect="-15" />
+            <action condition="1" type="stat" label="Bon Manager" effect="-20" />
+            <action condition="1" type="modal" label="Réaction" effect="Vous agressez de bon mation Mme Tourpoin. GREVE GENERAL DANS L'HEURE !" />
+            
+            <action condition="2" type="stat" label="Assertivité" effect="15" />
+            <action condition="2" type="stat" label="Bon Manager" effect="15" />
+            <action condition="2" type="modal" label="Réaction" effect="Vous réagissez avec calme. Vous invitez Mme Tourpoin à déjeuner. Vous passez un agréable moment en sa compagnie et vous arrivez à résoudre une grande partie des problèmes soulevés. Effets : -70 € sur votre compte en banque et par jalousie votre femme divorce." />
+            
+            <action condition="3" type="stat" label="Assertivité" effect="5" />
+            <action condition="3" type="stat" label="Bon Manager" effect="5" />
+            <action condition="3" type="modal" label="Réaction" effect="Vous rassurez Mme Tourpoin. Vous réussisez à résoudre une partie des problèmes" />
+            
+            <action condition="4" type="stat" label="Assertivité" effect="25" />
+            <action condition="4" type="stat" label="Bon Manager" effect="25" />
+            <action condition="4" type="modal" label="Réaction" effect="Vous réussisez à fédérer Mme Tourpoin et une majorité de vos employés. Leur taux de productivité augmente." />
+        </button>
+    </view>
+    
+    <view id="troisiemeTest">
+        <type>textSelection</type>
+        <text>
+            Vous avez un autre problème à gérer.
+            Une de vos employés, Giselle, sent excessivement mauvais.
+            Un bon nombre de vos employés s’en plaignent régulièrement et Giselle est de plus en plus mise à l’écart. 
+        </text>
+        <item value="0">
+            Vous convoquez Giselle dans votre bureau et vous la licenciez.
+            Pas grave pour le procès et les coûts engendrés par ce licenciement.
+        </item>
+        <item value="1">
+            Vous convoquez Giselle dans votre bureau et vous lui demandez si tous va bien et qu’elle ne souffre d’aucune maladie.
+            Vous lui exposez alors la situation.
+            Vous lui demandez ensuite quelle solution elle souhaiterait apporter à la situation.
+        </item>
+        <item value="2">
+            Vous allez voir Giselle et vous lui demandez quand elle pourrait dans la journée passer vous voir dans votre bureau.
+            Une fois présente dans votre bureau, vous lui offrait un flacon de parfum en guise de récompense pour le rendement des dernières semaines.
+        </item>
+        <item value="3">
+           Vous allez voir Giselle et vous lui demandez quand elle pourrait dans la journée passer vous voir dans votre bureau.
+            Une fois dans votre bureau avec Giselle, vous lui exposez calmement la situation.
+            Vous lui proposez ensuite de prendre quelque jour de congé afin de consulter un spécialiste si nécessaire.
+            Vous terminez l’entretien en insistant sur le fait que vous restez à sa disposition afin de trouver une solution. 
+        </item>
+        <item value="4">
+            Vous organisez une surprise pour l’anniversaire de Giselle et vous lui offrez un flacon de parfum. 
+        </item>
+        
+        <button target="quatriemeTest" label="Suivant">
+            <action condition="0" type="stat" label="Assertivité" effect="-20" />
+            <action condition="0" type="stat" label="Bon Manager" effect="-30" />
+            <action condition="0" type="modal" label="Réaction" effect="Vous avez très mal réagi. Malgrès l'ancienne mise à l'écart de Giselle, l'ensemble des employés se mobilise pour la soutenir. Vous finissez en prison après un battage médiatique." />
+            
+            <action condition="1" type="stat" label="Assertivité" effect="-5" />
+            <action condition="1" type="stat" label="Bon Manager" effect="-5" />
+            <action condition="1" type="modal" label="Réaction" effect="Vous laissez Giselle vous proposer une solution au problème." />
+            
+            <action condition="2" type="stat" label="Assertivité" effect="-10" />
+            <action condition="2" type="stat" label="Bon Manager" effect="-20" />
+            <action condition="2" type="modal" label="Réaction" effect="La manipulation psychologique n'est pas vraiment votre fort. Giselle a bien compris le message que vous souhaitiez lui faire passer. Elle en appelle alors au soutien de ses collègues. Une grêve est à prévoir" />
+            
+            <action condition="3" type="stat" label="Assertivité" effect="5" />
+            <action condition="3" type="stat" label="Bon Manager" effect="10" />
+            <action condition="3" type="modal" label="Réaction" effect="Les autres employés se demandent si cela serait intéressant de ne plus se laver afin d'obtenir des congés supplémentaires." />
+            
+            <action condition="4" type="stat" label="Assertivité" effect="-20" />
+            <action condition="4" type="stat" label="Bon Manager" effect="-30" />
+            <action condition="4" type="modal" label="Réaction" effect="Personne ne vient à l'anniversaire suprise de Giselle. Le cadeau ainsi que le message ne passent pas très bien. Giselle tombe en dépression et se suicide. Très mauvaise pub !" />
+        </button>
+    </view>
+    
+    <view id="quatriemeTest">
+        <type>textSelection</type>
+        <text>
+            A présent, vous allez en réunion projet.
+            A l’ordre du jour Michel, le chef projet est censé vous faire une présentation de l’avancée du projet.
+            Cette présentation est pour vous un moyen de tester Michel sur sa faculté à vendre un projet car les
+            clients arrivent dans une semaine et vous comptez sur Michel pour leur vendre le projet. 
+            Au cours de la réunion, vous trouvez Michel de plus en plus mauvais, contradictoire, pas alaise.
+            Cela commence à vous agacer, et vous décider d’interrompre la prestation orale catastrophique de Michel.
+        </text>
+        <item value="0">
+            Vous interrompez Michel et vous lui dites :
+            «Michel je t’interrompe car là ça ne va pas.
+            Tu es totalement incohérent ce que tu nous dis là. 
+            J’ai vraiment l’impression de perdre mon temps. 
+            Donc ce que l’on va faire c’est que tu vas retourner travail 
+            ton dossier et demain tu nous fais une présentation digne de ce nom.» 
+        </item>
+        <item value="1">
+            Vous interrompez Michel et vous lui dites : 
+            «Excuses moi Michel mais j’ai strictement rien compris à ce que tu nous racontes depuis le début,
+            et je pense que je ne suis pas le seul. Tu peux recommencer depuis le début.»
+        </item>
+        <item value="2">
+            Vous interrompez Michel et vous lui dites :
+            «Michel, veux-tu bien m’excuser de t’interrompe mais je sens bien que tu n’es pas dans 
+            ton état habituel. Tu as un problème d’ordre privé ? Les enfants vont bien ? 
+            Si tu veux, tu prendre ta journée voir ta semaine. Ton adjoint et moi même
+            ont peu parfaitement t’épauler sur le dossier y a aucun souci.» 
+        </item>
+        <item value="3">
+           Vous interrompez Michel et vous lui dites :
+            «Excuses moi Michel, mais je te sens un peu déstabilisé.
+            Relax, respires, je vais pas te virer. 
+            Je suis certain que ton équipe et toi vous avez fait un travail formidable.» 
+        </item>
+        <item value="4">
+            Vous interrompez Michel et vous lui dites :
+            «Bon…, tu comptes faire la même présentation le jour j devant les clients.
+            Non parce que là je vois pas qui pourrait accepter notre contrat après une 
+            présentation aussi nulle»
+        </item>
+        
+        <button target="cinquiemeTest" label="Suivant">
+            <action condition="0" type="stat" label="Assertivité" effect="-10" />
+            <action condition="0" type="stat" label="Bon Manager" effect="-20" />
+            <action condition="0" type="modal" label="Réaction" effect="Vous bousculez Michel sans vous intéresser réellement aux éventuelles sources du problèmes. Michel est encore plus stressé et a un accident de voiture." />
+            
+            <action condition="1" type="stat" label="Assertivité" effect="5" />
+            <action condition="1" type="stat" label="Bon Manager" effect="-10" />
+            <action condition="1" type="modal" label="Réaction" effect="Vous réagissez de manière calme et détendu. Michel vous propose alors une excellente présentation. Cependant le jour J, Michel n'ayant pas réglé son problème initial, la présentation est une catastrophe. Votre société est à présent très menacée." />
+            
+            <action condition="2" type="stat" label="Assertivité" effect="10" />
+            <action condition="2" type="stat" label="Bon Manager" effect="15" />
+            <action condition="2" type="modal" label="Réaction" effect="Vous vous intéressez au vrai fond du problème. Un des enfants de Michel est à l'hôpital. Michel prend alors deux-trois jours de congés." />
+            
+            <action condition="3" type="stat" label="Assertivité" effect="5" />
+            <action condition="3" type="stat" label="Bon Manager" effect="5" />
+            <action condition="3" type="modal" label="Réaction" effect="Michel réalise par la suite une excellente présentation, mais la présentation le jour J est un échec total. Votre société est à présent menacée." />
+            
+            <action condition="4" type="stat" label="Assertivité" effect="-15" />
+            <action condition="4" type="stat" label="Bon Manager" effect="-25" />
+            <action condition="4" type="modal" label="Réaction" effect="Michel tombe en dépression. Son fils qui était à l'hôpital décède à l'age de 8 ans. Michel se suicide peu de temps après." />
+        </button>
+    </view>
+    
+    <view id="cinquiemeTest">
+        <type>textSelection</type>
+        <text>
+            André, un de vos employés,
+            est en charge d’un dossier important et devais le déposer à votre secrétaire ce matin. 
+            N’ayant toujours rien reçu, vous décidez de convoquer André dans votre bureau.
+            Vous lui demandez alors où est le dossier, et il vous répond qu’il n’a pas eu le temps 
+            de le terminer. Comment réagissez-vous ?
+        </text>
+        <item value="0">
+            Vous appelez alors de suite Théo, 
+            son concurrent direct pour une éventuelle promotion, et vous lui confiez le dossier d’André. 
+        </item>
+        <item value="1">
+            Vous étudiez rapidement avec André les causes qui lui ont empêché de finir à temps le dossier 
+            (trop de travail en plus du dossier). 
+            Vous demandez alors à André de cesser toutes ses activités et de se concentrer uniquement cet
+            après-midi à la rédaction du dossier.
+        </item>
+        <item value="2">
+            Vous demandez à André de vous fournir ce qu’il a déjà fait, 
+            et vous décidez de finir vous même le dossier. 
+        </item>
+        <item value="3">
+            Vous dites à André que cela ne fait rien car en bon Manager vous prévoyez toujours tout 
+            à l’avance avec des délais supplémentaire. 
+            Le dossier peut en réalité être rendu dans deux jours. 
+        </item>
+        <item value="4">
+           Vous virez André !
+        </item>
+        
+        <button target="sixiemeTest" label="Suivant">
+            <action condition="0" type="stat" label="Assertivité" effect="-15" />
+            <action condition="0" type="stat" label="Bon Manager" effect="-20" />
+            <action condition="0" type="modal" label="Réaction" effect="André n'a plus aucune motivation à présent." />
+            
+            <action condition="1" type="stat" label="Assertivité" effect="5" />
+            <action condition="1" type="stat" label="Bon Manager" effect="15" />
+            <action condition="1" type="modal" label="Réaction" effect="André est bien plus motivé à présent. Il vous sens impliqué dans son travail." />
+            
+            <action condition="2" type="stat" label="Assertivité" effect="10" />
+            <action condition="2" type="stat" label="Bon Manager" effect="-15" />
+            <action condition="2" type="modal" label="Réaction" effect="Vous vous surchargez de travail et perdez de la crédibilité auprès de vos employés." />
+            
+            <action condition="3" type="stat" label="Assertivité" effect="10" />
+            <action condition="3" type="stat" label="Bon Manager" effect="5" />
+            <action condition="3" type="modal" label="Réaction" effect="Vous avez prévu du temps supplémentaire cette fois mais attention à ne pas donner de mauvaises habitudes à vos employés qui risquent de plus savoir ce qu'est rendre un dossier à l'heure." />
+            
+            <action condition="4" type="stat" label="Assertivité" effect="-30" />
+            <action condition="4" type="stat" label="Bon Manager" effect="-50" />
+            <action condition="4" type="modal" label="Réaction" effect="Vous réagissez avec aggresivité. Les employés se mobilisent pour soutenir André. GREVE GENERALE !" />
+        </button>
+    </view>
+    
+    <view id="sixiemeTest">
+        <type>textSelection</type>
+        <text>
+            Vous avez demandé à votre secrétaire, Martine, de réserver des billets de train
+            pour vos vacances dans le Sud. 
+            Vous allez là voir pour lui demander si elle l’a bien fait, vous partez ce soir… 
+            Malheureusement, Martine n’a pas eu le temps de réaliser votre réservation.
+            En effet, elle a été prise par l’organisation de votre agenda pour votre retour 
+            de vacances. Comment réagissez-vous ?
+        </text>
+        <item value="0">
+            Ne vous inquiétez pas Martine, je vais le faire de suite. 
+        </item>
+        <item value="1">
+            On peut vraiment pas compter sur vous Martine !
+        </item>
+        <item value="2">
+            Ok, pas de soucis, tout compte fait, je vais finalement partir demain dans l’après-midi. 
+            J’ai un dossier à terminer ce soir. 
+            Mais rentrez chez vous Martine je vais m’occuper de ma réservation.
+        </item>
+        
+        <button target="quizz" label="Suivant">
+            <action condition="0" type="stat" label="Assertivité" effect="5" />
+            <action condition="0" type="stat" label="Bon Manager" effect="10" />
+            <action condition="0" type="modal" label="Réaction" effect="Vous réagissez avec calme. Martine ne se sens pas fautive." />
+            
+            <action condition="1" type="stat" label="Assertivité" effect="-10" />
+            <action condition="1" type="stat" label="Bon Manager" effect="-10" />
+            <action condition="1" type="modal" label="Réaction" effect="Vous réagissez de manière colérique. Martine part très pertubuée en congés." />
+            
+            <action condition="2" type="stat" label="Assertivité" effect="10" />
+            <action condition="2" type="stat" label="Bon Manager" effect="15" />
+            <action condition="2" type="modal" label="Réaction" effect="Calme et sénérité, vous en profitez même pour prendre un billet en première classe." />
+            
+            <action type="modal" label="Fin de journée !" effect="Vous avez bien mérité une bonne nuit de repos. Mais avant un petit quizz !" />
+        </button>
+    </view>
+    
+    <!-- SUITE EVENTUELLE
+    
+    <view id="septiemeTest">
+        <type>textSelection</type>
+        <text>
+            
+        </text>
+        <item value="0">
+             
+        </item>
+        <item value="1">
+            
+        </item>
+        <item value="2">
+            
+        </item>
+        
+        <button target="septiemeTest" label="Suivant">
+            <action condition="0" type="stat" label="Assertivité" effect="5" />
+            <action condition="0" type="stat" label="Bon Manager" effect="10" />
+            <action condition="0" type="modal" label="Réaction" effect="" />
+        </button>
+    </view>
+    
+    -->
+    
+    <view id="quizz">
+        <type>text</type>
+        <text>
+            Quel psychologue a introduit l'assertivité ?
+        </text>
+        <button target="quizz1" label="Nicolas Sarkozy" image="/images/image37.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Andrew Salter" />
+        </button>
+        <button target="quizz1" label="Andrew Salter" image="/images/rien.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+        <button target="quizz1" label="Wilhelm Maximilian Wundt" image="/images/image38.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Andrew Salter" />
+        </button>
+        <button target="quizz1" label="Franck Hanoh" image="/images/image39.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Andrew Salter" />
+        </button>
+    </view>
+    
+    <view id="quizz1">
+        <type>text</type>
+        <text>
+            Quand a été introduit le concept d'assertivité ?
+        </text>
+        <button target="quizz2" label="Deuxième moitié du XIX ième siècle" image="/images/rien.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Première moitié du XX ième siècle" />
+        </button>
+        <button target="quizz2" label="Première moitié du XX ième siècle" image="/images/rien.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+        <button target="quizz2" label="Deuxième moitié du XX ième siècle" image="/images/rien.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Première moitié du XX ième siècle" />
+        </button>
+        <button target="quizz2" label="Première moitié du XXI ième siècle" image="/images/rien.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Première moitié du XX ième siècle" />
+        </button>
+    </view>
+    
+    <view id="quizz2">
+        <type>text</type>
+        <text>
+            D'après l'analyse transactionnelle, quelle est la position de vie correspondant à l'assertivité ?
+        </text>
+        <button target="quizz3" label="Je suis OK, vous êtes OK" image="/images/image40.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+        <button target="quizz3" label="Je suis OK, vous n’êtes pas OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je suis OK, vous êtes OK" />
+        </button>
+        <button target="quizz3" label="Je ne suis pas OK, vous êtes OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je suis OK, vous êtes OK" />
+        </button>
+        <button target="quizz3" label="Je ne suis pas OK, vous n’êtes pas OK" image="/images/rien.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je suis OK, vous êtes OK" />
+        </button>
+    </view>
+    
+    <view id="quizz3">
+        <type>text</type>
+        <text>
+            D'après l'analyse transactionnelle, quelle est la position de vie correspondant à l'agressivité ?
+        </text>
+        <button target="quizz4" label="Je ne suis pas OK, vous n’êtes pas OK" image="/images/rien.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je suis OK, vous n’êtes pas OK" />
+        </button>
+        <button target="quizz4" label="Je suis OK, vous êtes OK" image="/images/image40.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je suis OK, vous n’êtes pas OK" />
+        </button>
+        <button target="quizz4" label="Je ne suis pas OK, vous êtes OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je suis OK, vous n’êtes pas OK" />
+        </button>
+        <button target="quizz4" label="Je suis OK, vous n’êtes pas OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+    </view>
+    
+    <view id="quizz4">
+        <type>text</type>
+        <text>
+            D'après l'analyse transactionnelle, quelle est la position de vie correspondant à la soumission ?
+        </text>
+        <button target="quizz5" label="Je ne suis pas OK, vous êtes OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+        <button target="quizz5" label="Je ne suis pas OK, vous n’êtes pas OK" image="/images/rien.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je ne suis pas OK, vous êtes OK" />
+        </button>
+        <button target="quizz5" label="Je suis OK, vous n’êtes pas OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je ne suis pas OK, vous êtes OK" />
+        </button>
+        <button target="quizz5" label="Je suis OK, vous êtes OK" image="/images/image40.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je ne suis pas OK, vous êtes OK" />
+        </button>
+    </view>
+    
+    <view id="quizz5">
+        <type>text</type>
+        <text>
+            D'après l'analyse transactionnelle, quelle est la position de vie correspondant à l'abandon ?
+        </text>
+        <button target="quizz6" label="Je suis OK, vous n’êtes pas OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je ne suis pas OK, vous n’êtes pas OK" />
+        </button>
+        <button target="quizz6" label="Je ne suis pas OK, vous n’êtes pas OK" image="/images/rien.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+        <button target="quizz6" label="Je ne suis pas OK, vous êtes OK" image="/images/image30.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je ne suis pas OK, vous n’êtes pas OK" />
+        </button>
+        <button target="quizz6" label="Je suis OK, vous êtes OK" image="/images/image40.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Je ne suis pas OK, vous n’êtes pas OK" />
+        </button>
+    </view>
+    
+    <view id="quizz6">
+        <type>text</type>
+        <text>
+            Qu'est ce que l'effet Pygmalion ?
+        </text>
+        <button target="quizz7" label="C'est le fait de transmettre des sentiments à une personne. Je suis amoureux, la personne est amoureuse." image="/images/image41.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : C'est la transmission positive (ou négative) à autri. Être joyeux, rendra les gens joyeux." />
+        </button>
+        <button target="quizz7" label="Pygmalion vous avez dit ? Ha oui, c'est l'entreprise." image="/images/image42.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : C'est la transmission positive (ou négative) à autri. Être joyeux, rendra les gens joyeux." />
+        </button>
+        <button target="quizz7" label="C'est la transmission positive (ou négative) à autri. Être joyeux, rendra les gens joyeux." image="/images/image41.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+        <button target="quizz7" label="Bygmalion, c'est Jean-François Cope !" image="/images/image43.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : C'est la transmission positive (ou négative) à autri. Être joyeux, rendra les gens joyeux." />
+        </button>
+    </view>
+    
+    <view id="quizz7">
+        <type>text</type>
+        <text>
+            Comment nomme-t-on aussi l'effet Pygmalion ?
+        </text>
+        <button target="quizz7" label="Effet papillon" image="/images/image44.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Effet Rosenthal &amp; Jacobson" />
+        </button>
+        <button target="quizz7" label="Effet Doppler" image="/images/image45.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Effet Rosenthal &amp; Jacobson" />
+        </button>
+        <button target="quizz7" label="Effet de levier" image="/images/image46.png">
+            <action type="stat" label="Note" effect="-1" />
+            <action type="modal" label="Faux !" effect="La bonne réponse était : Effet Rosenthal &amp; Jacobson" />
+        </button>
+        <button target="quizz7" label="Effet Rosenthal &amp; Jacobson" image="/images/image47.png">
+            <action type="stat" label="Note" effect="1" />
+            <action type="modal" label="Vrai !" effect="Bonne réponse !" />
+        </button>
+    </view>
+    
+</story>

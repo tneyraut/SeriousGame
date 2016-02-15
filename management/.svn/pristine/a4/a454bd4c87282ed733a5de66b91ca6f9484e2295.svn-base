@@ -1,0 +1,91 @@
+package managementdeshommes;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+public class TextSelectionView extends View implements ActionListener
+{
+    private HashMap<String, String> items;
+    private String selectedValue;
+    private ButtonGroup group;
+    
+    public TextSelectionView(String id)
+    {
+        super(id);
+        group = new ButtonGroup();
+        items = new HashMap<>();
+        selectedValue = "";
+    }
+    
+    @Override
+    public void fill(Element viewXML)
+    {
+        NodeList choicesList = viewXML.getElementsByTagName("item");
+        for(int i=0; i<choicesList.getLength(); i++)
+        {
+            Element xmlChoice = (Element) choicesList.item(i);
+            this.addItem(xmlChoice.getTextContent(), xmlChoice.getAttribute("value"));
+        }
+    }
+    
+    @Override
+    public void createStructure()
+    {
+        this.setLayout(new BorderLayout());
+        
+        this.add(textLabel, BorderLayout.NORTH);
+        
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
+        this.add(centerPanel, BorderLayout.CENTER);
+        
+        this.add(choicePanel, BorderLayout.SOUTH);
+    }
+    
+    public void addItem(String label, String value)
+    {
+        String html = "<html>"+label+"</html>";
+        html = html.replace("*username*", Joueur.getInstance().getUsername());
+        
+        JRadioButton radioBtn = new JRadioButton(html);
+        radioBtn.addActionListener(this);
+        group.add(radioBtn);
+        
+        centerPanel.add(radioBtn);
+        
+        items.put(label, value);
+    }
+    
+    @Override
+    public String getValue()
+    {
+        return selectedValue;
+    }
+    
+    @Override
+    public void addButton(JButton button)
+    {
+        super.addButton(button);
+        button.setEnabled(false);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event)
+    {
+        JRadioButton btn = (JRadioButton) event.getSource();
+        
+        selectedValue = items.get(btn.getText());
+        
+        for(JButton bouton : boutons)
+        {
+            bouton.setEnabled(true);
+        }
+    }
+}

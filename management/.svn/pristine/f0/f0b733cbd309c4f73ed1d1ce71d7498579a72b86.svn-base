@@ -1,0 +1,90 @@
+package managementdeshommes;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.util.HashMap;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+public class MainWindow extends JFrame implements Game
+{
+    private StoryModel model;
+    
+    private JPanel views;
+    private HashMap<String, View> viewsList;
+    private String currentView;
+    
+    private CardLayout card;
+    private StatPanel statPanel;
+    private JLabel text;
+    
+    public MainWindow()
+    {
+        super("Management des Hommes");
+        this.setSize(800, 550);
+        this.setLocationRelativeTo(null);
+        this.setIconImage(getToolkit().getImage(getClass().getResource("/icones/icone.png")));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        this.model = new StoryModel("/story/story.xml");
+        this.viewsList = new HashMap<>();
+        
+        this.setLayout(new BorderLayout());
+        
+        views = new JPanel();
+        card = new CardLayout();
+        views.setLayout(card);
+        this.getContentPane().add(views, BorderLayout.CENTER);
+
+        statPanel = new StatPanel();
+        this.getContentPane().add(statPanel, BorderLayout.WEST);
+        statPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        model.fill(this);
+    }
+    
+    @Override
+    public void addView(View view)
+    {
+        if(currentView == null)
+            currentView = view.getId();
+        
+        views.add(view, view.getId());
+        viewsList.put(view.getId(), view);
+    }
+    
+    @Override
+    public void show(String id)
+    {
+        currentView = id;
+        card.show(views, id);
+        statPanel.updateStats();
+    }
+
+    @Override
+    public void showNotification(String title, String notification, boolean modal)
+    {
+        if(modal)
+        {
+            JOptionPane.showMessageDialog(null, notification, title, JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    public String getCurrentValue()
+    {
+        return viewsList.get(currentView).getValue();
+    }
+
+    @Override
+    public void gameOver()
+    {
+        this.setVisible(false);
+        
+        IntroWindow w = new IntroWindow();
+        w.setVisible(true);
+    }
+}
